@@ -1,7 +1,5 @@
 import { Notebook } from "./runtime/Notebook";
 
-await import("./runtime/Notebook");
-
 export const notebook = new Notebook();
 
 const { cell } = notebook;

@@ -1,5 +1,3 @@
-import { notebook } from "../notebook";
-
 export class Notebook {
   private readonly cells: Cell[] = [];
   constructor() {
@@ -12,12 +10,13 @@ export class Notebook {
     options: CellOptions = {}
   ): Recall<Value> {
     const cell = new Cell(name, definition, options);
+    console.debug("Notebook.cell created cell", cell)
     this.cells.push(cell);
     return cell.recall;
   }
   tick(previous: Context): Context {
     console.debug("Notebook.click start");
-    const context = new Context(notebook);
+    const context = new Context(this);
     for (const cell of this.cells) {
       cell.eval(context);
     }
