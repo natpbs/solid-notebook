@@ -7,7 +7,7 @@ export const Render = (props: { notebook: Notebook }) => {
     (window as unknown as Record<string, unknown>).context = context();
     setTimeout(
       () => setContext((context) => props.notebook.tick(context)),
-      10000
+      1000
     );
   });
   return (
