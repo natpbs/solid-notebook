@@ -1,7 +1,9 @@
-import type { Component } from 'solid-js';
+import type { Component } from "solid-js";
 
-import logo from './logo.svg';
-import styles from './App.module.css';
+import logo from "./logo.svg";
+import styles from "./App.module.css";
+import { Render } from "./runtime/Render";
+import { notebook } from "./notebook";
 
 const App: Component = () => {
   return (
@@ -19,6 +21,7 @@ const App: Component = () => {
         >
           Learn Solid
         </a>
+        <Render notebook={notebook} />
       </header>
     </div>
   );
