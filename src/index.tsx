@@ -1,5 +1,5 @@
 /* @refresh reload */
-import "solid-devtools/setup";
+import "solid-devtools";
 import { render } from "solid-js/web";
 import "./index.css";
 import App from "./App";

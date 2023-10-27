@@ -3,16 +3,32 @@ import { Context, Notebook } from "./Notebook";
 
 export const Render = (props: { notebook: Notebook }) => {
   const [context, setContext] = createSignal(new Context());
-  createEffect(() => {
-    (window as unknown as Record<string, unknown>).context = context();
-    setTimeout(
-      () => setContext((context) => props.notebook.tick(context)),
-      1000
-    );
-  });
+  const [play, setPlay] = createSignal(true);
+  createEffect(
+    (timeout) => {
+      if (typeof timeout === "number") {
+        console.debug("Renderer.tick - timeout:", timeout, "play:", play());
+        clearTimeout(timeout);
+      }
+      if (play()) {
+        context();
+        return setTimeout(
+          () => setContext((context) => props.notebook.tick(context)),
+          1000
+        );
+      }
+    },
+    undefined,
+    { name: "tick" }
+  );
   return (
-    <For each={Array.from(context().values.values())}>
-      {(value) => <div class="value">{JSON.stringify(value)}</div>}
-    </For>
+    <>
+      <button onClick={() => setPlay((play) => !play)}>
+        {play() ? "Running, click to pause" : "Paused, click to run"}
+      </button>
+      <For each={Array.from(context().states.values())}>
+        {(state) => <div class="value">{JSON.stringify(state.value)}</div>}
+      </For>
+    </>
   );
 };
